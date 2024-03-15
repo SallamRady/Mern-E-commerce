@@ -1,7 +1,12 @@
 import "./App.css";
+import MainHeader from "./components/layout/MainHeader";
 
 function App() {
-  return <div className="bg-red-500">Test</div>;
+  return (
+    <div>
+      <MainHeader />
+    </div>
+  );
 }
 
 export default App;
