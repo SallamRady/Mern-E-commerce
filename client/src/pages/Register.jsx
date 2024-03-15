@@ -7,6 +7,7 @@ import FormPasswordField from "../components/form/FormPasswordField";
 import IsRequired from "../utils/validation/IsRequired";
 import IsValidEmail from "../utils/validation/IsEmail";
 import IsValidPassword from "../utils/validation/IsValidPassword";
+import ImagetoBase64 from "../utils/images/ImagetoBase64";
 
 export default function Register() {
   //* declare our component state and variables
@@ -16,6 +17,7 @@ export default function Register() {
     email: "",
     password: "",
     confirmPassword: "",
+    image: "",
   });
   const [errors, setErros] = useState({
     firstName: "",
@@ -29,6 +31,10 @@ export default function Register() {
   const handleOnChange = (e) => {
     let { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
+  };
+  const handleUploadFile = async (e) => {
+    let imageBase64Url = await ImagetoBase64(e.target.files[0]);
+    setData((prev) => ({ ...prev, image: imageBase64Url }));
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -68,9 +74,25 @@ export default function Register() {
   return (
     <div className="p-3 md:p-4">
       <div className="w-full max-w-sm bg-white m-auto flex  flex-col p-4">
+        <h1 className="text-center text-2xl font-bold">Register</h1>
         <div className="w-20 h-20 overflow-hidden rounded-full drop-shadow-md shadow-md m-auto relative ">
-          <img src={loginSignupImage} className="w-full h-full" />
-          <h1 className="text-center text-2xl font-bold">Register</h1>
+          <img
+            src={data.image ? data.image : loginSignupImage}
+            className="w-full h-full"
+          />
+
+          <label htmlFor="profileImage">
+            <div className="absolute bottom-0 h-1/3  bg-slate-500 bg-opacity-50 w-full text-center cursor-pointer">
+              <p className="text-sm p-1 text-white">Upload</p>
+            </div>
+            <input
+              type={"file"}
+              id="profileImage"
+              accept="image/*"
+              className="hidden"
+              onChange={handleUploadFile}
+            />
+          </label>
         </div>
 
         <form className="w-full py-3 flex flex-col" onSubmit={handleSubmit}>
