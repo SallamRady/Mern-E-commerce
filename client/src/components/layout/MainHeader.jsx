@@ -9,10 +9,18 @@ import {
 } from "../../constants/Pathes";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import { BsCartFill } from "react-icons/bs";
+import { useState } from "react";
+import UserDropDown from "./UserDropDown";
 
 export default function MainHeader() {
+  // *Declare our state variables
+  const [showUserDropDown, setShowUserDropDown] = useState(false);
+  // TODO::define our functions
+  const toggleUserDropDown = () => setShowUserDropDown((prev) => !prev);
+
+  // *Return our Component UI.
   return (
-    <header className="flex shadow-md w-full h-16 px-2 md:px-4 justify-between">
+    <header className="flex shadow-md w-full h-16 px-2 md:px-4 justify-between bg-white">
       {/* desktop header */}
       <div className="flex items-center h-full">
         <Link to={HOME_PATH}>
@@ -23,12 +31,14 @@ export default function MainHeader() {
       </div>
       {/* navbar menu */}
       <div className="flex items-center gap-4 md:gap-7">
+        {/* navlinks */}
         <nav className="flex gap-3 md:gap-6 text-base md:text-lg">
           <Link to={HOME_PATH}>Home</Link>
           <Link to={MENU_PATH}>Menu</Link>
           <Link to={ABOUT_PATH}>About</Link>
           <Link to={CONTACT_PATH}>Contact</Link>
         </nav>
+        {/* cart icon & actions */}
         <div className="text-2xl text-slate-600 relative">
           <Link to={CART_PATH}>
             <BsCartFill />
@@ -37,8 +47,13 @@ export default function MainHeader() {
             </div>
           </Link>
         </div>
-        <div className="text-2xl text-slate-600">
+        {/* user icon & auth  actions*/}
+        <div
+          className="text-2xl text-slate-600 relative cursor-pointer"
+          onClick={() => toggleUserDropDown()}
+        >
           <HiOutlineUserCircle />
+          {showUserDropDown && <UserDropDown />}
         </div>
       </div>
     </header>
