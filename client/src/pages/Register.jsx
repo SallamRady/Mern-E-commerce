@@ -36,7 +36,7 @@ export default function Register() {
     let imageBase64Url = await ImagetoBase64(e.target.files[0]);
     setData((prev) => ({ ...prev, image: imageBase64Url }));
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     //TODO::Validation Layer
     setErros({
@@ -67,7 +67,15 @@ export default function Register() {
       return;
     }
     //TODO::send data to server
-    console.log("data is valid send data to server ", data);
+    let url = `${process.env.REACT_APP_SERVER_DOMAIN}signup`;
+    let response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    console.log("response", response);
   };
 
   //* return our component ui
