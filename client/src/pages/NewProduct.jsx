@@ -5,16 +5,18 @@ import { productCategories } from "../constants/ProductCategories";
 import { BsCloudUpload } from "react-icons/bs";
 import ImagetoBase64 from "../utils/images/ImagetoBase64";
 import IsRequired from "../utils/validation/IsRequired";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function NewProduct() {
   // TODO::declare our component state
-  const [data, setData] = useState({
+  let initialDataState = {
     name: "",
     category: "fruits",
     images: [],
     price: "",
     description: "",
-  });
+  };
+  const [data, setData] = useState(initialDataState);
   const [errors, setErrors] = useState({
     name: "",
     category: "",
@@ -23,6 +25,7 @@ export default function NewProduct() {
     description: "",
   });
   const [imagesLenWarnning, setImagesLenWarnning] = useState("");
+  const [loading, setLoading] = useState(false);
 
   //*define our functions
   const handleOnChange = (e) => {
@@ -68,7 +71,26 @@ export default function NewProduct() {
       return;
     }
     //TODO::send data to server
-    console.log("Data ready to store", data);
+    let url = `${process.env.REACT_APP_SERVER_DOMAIN}addProduct`;
+    await fetch(url, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        toast.success(result.message);
+        setData(initialDataState);
+      })
+      .catch((err) => {
+        console.log("Error in add product Up Function::", err);
+        toast.error("Unexpected Error :(");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -171,6 +193,7 @@ export default function NewProduct() {
           Save
         </button>
       </form>
+      <ToastContainer position="bottom-right" />
     </div>
   );
 }

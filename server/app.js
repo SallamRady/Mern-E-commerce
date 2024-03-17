@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
 const authRoutes = require("./routes/auth.routes");
+const productRoutes = require("./routes/product.routes");
 const consoleColors = require("./constants/console.colors");
 
 //* define and declare helper varables
@@ -18,6 +19,7 @@ app.use(cors());
 
 // TODO::set routes configration
 app.use(authRoutes);
+app.use(productRoutes);
 
 //TODO::Start Event-Loop
 mongoose
