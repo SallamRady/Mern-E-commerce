@@ -37,7 +37,6 @@ module.exports.signUp = (req, res, next) => {
 };
 
 module.exports.signIn = (req, res, next) => {
-  console.log(consoleColors.yellow, `Body:`, req.body);
   //TODO::check there is no user with this email.
   User.findOne({ email: req.body.email })
     .then((_doc) => {
@@ -63,6 +62,8 @@ module.exports.signIn = (req, res, next) => {
           {
             id: _doc._id,
             email: _doc.email,
+            image: _doc.image,
+            firstName: _doc.firstName,
           },
           process.env.SECRET_JWT_KEY,
           {

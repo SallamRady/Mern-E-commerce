@@ -88,7 +88,6 @@ export default function Register() {
             navigator(LOGIN_PATH);
           }, 1000);
         } else {
-          console.log("result", result);
           toast.error(result.message);
         }
       })

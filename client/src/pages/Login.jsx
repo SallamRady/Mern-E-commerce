@@ -5,7 +5,8 @@ import FormInputField from "../components/form/FormInputField";
 import FormPasswordField from "../components/form/FormPasswordField";
 import IsRequired from "../utils/validation/IsRequired";
 import { ToastContainer, toast } from "react-toastify";
-import { setDataInLS } from "../utils/storage/localStorage.utilities";
+import { useDispatch, useSelector } from "react-redux";
+import { loginMethod } from "../redux/slices/user.slice";
 
 export default function Login() {
   //* declare our component state and variables
@@ -19,6 +20,8 @@ export default function Login() {
   });
   const [loading, setLoading] = useState(false);
   const navigator = useNavigate();
+  const userState = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   //*define our functions
   const handleOnChange = (e) => {
@@ -37,7 +40,6 @@ export default function Login() {
       return;
     }
     //TODO::send data to server
-    console.log("data is valid send data to server ", data);
     let url = `${process.env.REACT_APP_SERVER_DOMAIN}signin`;
     await fetch(url, {
       method: "POST",
@@ -48,15 +50,13 @@ export default function Login() {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log("Response Result::", result);
         if (result?.ok) {
+          dispatch(loginMethod(result));
           toast.success(result.message);
-          setDataInLS("token", result.token);
           setTimeout(() => {
             navigator(HOME_PATH);
           }, 1000);
         } else {
-          console.log("result", result);
           toast.error(result.message);
         }
       })

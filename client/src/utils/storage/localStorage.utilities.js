@@ -14,3 +14,11 @@ export function setDataInLS(key, value) {
 export function getItemFromLS(key) {
   return localStorage.getItem(key);
 }
+
+/**
+ * remove item from local storage
+ * @param {*} key key of item
+ */
+export function removeItemFromLS(key) {
+  return localStorage.removeItem(key);
+}

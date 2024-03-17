@@ -11,10 +11,14 @@ import { HiOutlineUserCircle } from "react-icons/hi";
 import { BsCartFill } from "react-icons/bs";
 import { useState } from "react";
 import UserDropDown from "./UserDropDown";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function MainHeader() {
   // *Declare our state variables
   const [showUserDropDown, setShowUserDropDown] = useState(false);
+  const userState = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
   // TODO::define our functions
   const toggleUserDropDown = () => setShowUserDropDown((prev) => !prev);
 
@@ -52,7 +56,14 @@ export default function MainHeader() {
           className="text-2xl text-slate-600 relative cursor-pointer"
           onClick={() => toggleUserDropDown()}
         >
-          <HiOutlineUserCircle />
+          <div className="text-3xl cursor-pointer w-8 h-8 rounded-full overflow-hidden drop-shadow-md">
+            {userState.image ? (
+              <img src={userState.image} className="h-full w-full" />
+            ) : (
+              <HiOutlineUserCircle />
+            )}
+            {userState.firstName}
+          </div>
           {showUserDropDown && <UserDropDown />}
         </div>
       </div>
