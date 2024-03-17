@@ -6,6 +6,7 @@ export default function FormInputField({
   value,
   handleOnChange,
   errorMsg,
+  disabled
 }) {
   let inputClass =
     "mt-1 mb-2 w-full bg-slate-200 px-2 py-1 rounded focus-within:outline-blue-300";
@@ -18,6 +19,7 @@ export default function FormInputField({
         type={type}
         id={id}
         name={name}
+        disabled={disabled}
         className={inputClass}
         value={value}
         onChange={handleOnChange}

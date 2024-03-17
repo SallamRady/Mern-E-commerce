@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import "./App.css";
 import MainHeader from "./components/layout/MainHeader";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (

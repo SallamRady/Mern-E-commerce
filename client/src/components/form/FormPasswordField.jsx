@@ -8,6 +8,7 @@ export default function FormPasswordField({
   value,
   handleOnChange,
   errorMsg,
+  disabled,
 }) {
   // declare component state
   const [showPassword, setShowPassword] = useState(false);
@@ -27,6 +28,7 @@ export default function FormPasswordField({
             errorMsg ? "bg-red-200" : ""
           }`}
           value={value}
+          disabled={disabled}
           onChange={handleOnChange}
         />
         <span

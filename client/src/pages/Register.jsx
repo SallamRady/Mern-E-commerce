@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import { LOGIN_PATH } from "../constants/Pathes";
 import loginSignupImage from "../assets/login-animation.gif";
 import FormInputField from "../components/form/FormInputField";
@@ -26,6 +27,8 @@ export default function Register() {
     password: "",
     confirmPassword: "",
   });
+  const [loading, setLoading] = useState(false);
+  const navigator = useNavigate();
 
   //*define our functions
   const handleOnChange = (e) => {
@@ -38,6 +41,7 @@ export default function Register() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     //TODO::Validation Layer
     setErros({
       firstName: IsRequired(data.firstName) ? "" : "First Name is required.",
@@ -64,18 +68,36 @@ export default function Register() {
       !IsValidPassword(data.password) ||
       data.confirmPassword !== data.password
     ) {
+      setLoading(false);
       return;
     }
     //TODO::send data to server
     let url = `${process.env.REACT_APP_SERVER_DOMAIN}signup`;
-    let response = await fetch(url, {
+    await fetch(url, {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify(data),
-    });
-    console.log("response", response);
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result?.ok) {
+          toast.success(result.message);
+          setTimeout(() => {
+            navigator(LOGIN_PATH);
+          }, 1000);
+        } else {
+          console.log("result", result);
+          toast.error(result.message);
+        }
+      })
+      .catch((err) => {
+        console.log("Error in Sign Up Function::", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   //* return our component ui
@@ -112,6 +134,7 @@ export default function Register() {
             type={"text"}
             handleOnChange={handleOnChange}
             errorMsg={errors.firstName}
+            disabled={loading}
           />
 
           <FormInputField
@@ -122,6 +145,7 @@ export default function Register() {
             type={"text"}
             handleOnChange={handleOnChange}
             errorMsg={errors.lastName}
+            disabled={loading}
           />
 
           <FormInputField
@@ -132,6 +156,7 @@ export default function Register() {
             type={"email"}
             handleOnChange={handleOnChange}
             errorMsg={errors.email}
+            disabled={loading}
           />
 
           <FormPasswordField
@@ -141,6 +166,7 @@ export default function Register() {
             value={data.password}
             handleOnChange={handleOnChange}
             errorMsg={errors.password}
+            disabled={loading}
           />
 
           <FormPasswordField
@@ -150,10 +176,12 @@ export default function Register() {
             value={data.confirmPassword}
             handleOnChange={handleOnChange}
             errorMsg={errors.confirmPassword}
+            disabled={loading}
           />
 
           <button
             type="submit"
+            disabled={loading}
             className="w-full max-w-[150px] m-auto  bg-red-500 hover:bg-red-600 cursor-pointer  text-white text-xl font-medium text-center py-1 rounded-full mt-4"
           >
             Sign up
@@ -166,6 +194,7 @@ export default function Register() {
           </Link>
         </p>
       </div>
+      <ToastContainer position="bottom-right" />
     </div>
   );
 }

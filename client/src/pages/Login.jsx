@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { REGISTER_PATH } from "../constants/Pathes";
+import { Link, useNavigate } from "react-router-dom";
+import { HOME_PATH, REGISTER_PATH } from "../constants/Pathes";
 import FormInputField from "../components/form/FormInputField";
 import FormPasswordField from "../components/form/FormPasswordField";
 import IsRequired from "../utils/validation/IsRequired";
+import { ToastContainer, toast } from "react-toastify";
+import { setDataInLS } from "../utils/storage/localStorage.utilities";
 
 export default function Login() {
   //* declare our component state and variables
@@ -15,13 +17,15 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
+  const navigator = useNavigate();
 
   //*define our functions
   const handleOnChange = (e) => {
     let { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     //TODO::Validation Layer
     setErros({
@@ -34,6 +38,34 @@ export default function Login() {
     }
     //TODO::send data to server
     console.log("data is valid send data to server ", data);
+    let url = `${process.env.REACT_APP_SERVER_DOMAIN}signin`;
+    await fetch(url, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log("Response Result::", result);
+        if (result?.ok) {
+          toast.success(result.message);
+          setDataInLS("token", result.token);
+          setTimeout(() => {
+            navigator(HOME_PATH);
+          }, 1000);
+        } else {
+          console.log("result", result);
+          toast.error(result.message);
+        }
+      })
+      .catch((err) => {
+        console.log("Error in Sign Up Function::", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   //* return our component ui
@@ -76,6 +108,7 @@ export default function Login() {
           </Link>
         </p>
       </div>
+      <ToastContainer position="bottom-right" />
     </div>
   );
 }
