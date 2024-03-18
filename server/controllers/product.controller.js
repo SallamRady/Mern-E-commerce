@@ -23,3 +23,22 @@ module.exports.addProduct = (req, res, next) => {
       });
     });
 };
+
+module.exports.getAllProducts = (req, res, next) => {
+  Product.find({})
+    .then((products) => {
+      return res.status(200).json({
+        ok: true,
+        products,
+        message: "Product created successfully :)",
+      });
+    })
+    .catch((err) => {
+      console.log(consoleColors.red, "Error in create product::", err);
+      return res.status(500).json({
+        ok: false,
+        message: "Error in create product",
+        Error: err,
+      });
+    });
+};
