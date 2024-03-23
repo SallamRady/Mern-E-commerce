@@ -17,13 +17,14 @@ export default function MainHeader() {
   // *Declare our state variables
   const [showUserDropDown, setShowUserDropDown] = useState(false);
   const userState = useSelector((state) => state.user);
+  const cartQuantity = useSelector((state) => state.cart.quantity);
 
   // TODO::define our functions
   const toggleUserDropDown = () => setShowUserDropDown((prev) => !prev);
 
   // *Return our Component UI.
   return (
-    <header className="flex shadow-md w-full h-16 px-2 md:px-4 justify-between bg-white">
+    <header className="flex shadow-md w-full h-16 px-2 md:px-4 justify-between bg-white fixed z-10">
       {/* desktop header */}
       <div className="flex items-center h-full">
         <Link to={HOME_PATH}>
@@ -46,7 +47,7 @@ export default function MainHeader() {
           <Link to={CART_PATH}>
             <BsCartFill />
             <div className="absolute -top-1 -right-1 text-white bg-red-500 h-4 w-4 rounded-full m-0 p-0 text-sm text-center">
-              0
+              {cartQuantity}
             </div>
           </Link>
         </div>

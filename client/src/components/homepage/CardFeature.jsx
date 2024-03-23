@@ -1,7 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/slices/cart.slice";
 
 const CardFeature = ({ image, name, price, category, loading, id }) => {
+  // * declare our component variables and state
+  const dispatch = useDispatch();
+  let btnClass = `
+  relative h-12 w-40 
+  overflow-hidden 
+  border 
+  rounded-md
+  mt-1
+  border-yellow-500 
+  text-yellow-500 
+  shadow-2xl 
+  transition-all 
+  duration-200 
+  before:absolute 
+  before:bottom-0 
+  before:left-0 
+  before:right-0 before:top-0 before:m-auto 
+  before:h-0 before:w-0 before:rounded-sm 
+  before:bg-yellow-500 before:duration-300 before:ease-out 
+  hover:text-white hover:shadow-yellow-500 hover:before:h-40 
+  hover:before:w-40 hover:before:opacity-80`;
+  // define our helper functions
+  const addProductToCart = (product) => {
+    dispatch(addToCart(product));
+  };
   return (
     <div className="w-full min-w-[200px] max-w-[200px] bg-white hover:shadow-lg drop-shadow-lg py-5 px-4 cursor-pointer flex flex-col ">
       {image ? (
@@ -22,8 +49,13 @@ const CardFeature = ({ image, name, price, category, loading, id }) => {
               <span>{price}</span>
             </p>
           </Link>
-          <button className="bg-yellow-500 py-1 mt-2 rounded hover:bg-yellow-600 w-full">
-            Add Cart
+          <button
+            onClick={() =>
+              addProductToCart({ image, name, price, category, loading, id })
+            }
+            class={btnClass}
+          >
+            <span class="relative z-10">Add To Cart</span>
           </button>
         </>
       ) : (
