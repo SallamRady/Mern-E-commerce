@@ -3,12 +3,15 @@ import { useSelector } from "react-redux";
 import FilterProduct from "./FilterProduct";
 import CardFeature from "../homepage/CardFeature";
 
-export default function ProductList({ heading,id }) {
+export default function ProductList({ heading, id }) {
   const productData = useSelector((state) => state.product.productList);
-  const categoryList = [...new Set(productData?.map((el) => el.category))];
+  const categoryList = [
+    "All",
+    ...new Set(productData?.map((el) => el.category)),
+  ];
 
   //filter data display
-  const [filterby, setFilterBy] = useState("");
+  const [filterby, setFilterBy] = useState("all");
   const [dataFilter, setDataFilter] = useState([]);
 
   useEffect(() => {
@@ -17,8 +20,10 @@ export default function ProductList({ heading,id }) {
 
   const handleFilterProduct = (category) => {
     setFilterBy(category);
-    const filter = productData.filter(
-      (el) => el.category.toLowerCase() === category.toLowerCase()
+    const filter = productData.filter((el) =>
+    category.toLowerCase() == "all"
+        ? true
+        : el.category.toLowerCase() === category.toLowerCase()
     );
     setDataFilter(() => {
       return [...filter];

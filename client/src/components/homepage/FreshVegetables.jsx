@@ -22,7 +22,7 @@ export default function FreshVegetables() {
   };
   // *return  component ui.
   return (
-    <div className="">
+    <div>
       <div className="flex w-full items-center">
         <h2 className="font-bold text-2xl text-slate-800 mb-4">
           Fresh Vegetables
