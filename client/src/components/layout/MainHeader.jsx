@@ -5,19 +5,18 @@ import {
   CART_PATH,
   CONTACT_PATH,
   HOME_PATH,
-  MENU_PATH,
 } from "../../constants/Pathes";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import { BsCartFill } from "react-icons/bs";
 import { useState } from "react";
 import UserDropDown from "./UserDropDown";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import jumpToReleventDiv from "../../utils/scrol/jumpToReleventDiv";
 
 export default function MainHeader() {
   // *Declare our state variables
   const [showUserDropDown, setShowUserDropDown] = useState(false);
   const userState = useSelector((state) => state.user);
-  const dispatch = useDispatch();
 
   // TODO::define our functions
   const toggleUserDropDown = () => setShowUserDropDown((prev) => !prev);
@@ -38,7 +37,7 @@ export default function MainHeader() {
         {/* navlinks */}
         <nav className="flex gap-3 md:gap-6 text-base md:text-lg">
           <Link to={HOME_PATH}>Home</Link>
-          <Link to={MENU_PATH}>Menu</Link>
+          <Link onClick={() => jumpToReleventDiv("ourMenu")}>Menu</Link>
           <Link to={ABOUT_PATH}>About</Link>
           <Link to={CONTACT_PATH}>Contact</Link>
         </nav>

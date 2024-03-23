@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import HomeProductCard from "./HomeProductCard";
+import jumpToReleventDiv from "../../utils/scrol/jumpToReleventDiv";
 
 export default function HomeHeader() {
   let productState = useSelector((state) => state.product.productList);
@@ -27,7 +28,10 @@ export default function HomeHeader() {
           scrambled it to make a type specimen book. It has survived not only
           five centuries
         </p>
-        <button className="font-bold bg-red-500 text-slate-200 px-4 py-2 rounded-md">
+        <button
+          onClick={() => jumpToReleventDiv("ourMenu")}
+          className="font-bold bg-red-500 text-slate-200 px-4 py-2 rounded-md"
+        >
           Order Now
         </button>
       </div>
