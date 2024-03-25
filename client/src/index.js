@@ -8,6 +8,19 @@ import router from "./ROUTES";
 import { Provider } from "react-redux";
 import store from "./redux";
 
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/service-worker.js")
+      .then(() => {
+        console.log("Service worker registered successfully :)");
+      })
+      .catch((error) => {
+        console.log("Service worker registration failed:", error);
+      });
+  });
+}
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
