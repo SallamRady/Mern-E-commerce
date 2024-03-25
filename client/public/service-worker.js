@@ -52,6 +52,20 @@ self.addEventListener("active", (event) => {
 });
 
 /**
+ * TrimCache
+ * It's a function will remove an addational
+ * items in dynamic cache to save our memory
+ */
+function trimCache(cacheName, mxLen) {
+  caches.open(cacheName).then((cache) => {
+    return cache.keys().then((keys) => {
+      if (keys.length > mxLen) {
+        cache.delete(keys[0]).then(() => trimCache(cacheName, mxLen));
+      }
+    });
+  });
+}
+/**
  * Fetch Event
  * if exist in cache return it
  * else return it from network then store it in dynamic cache
@@ -69,6 +83,7 @@ self.addEventListener("fetch", (event) => {
         return fetch(event.request).then((res) => {
           return caches.open(DYNAMIC_CACHE).then((cache) => {
             cache.put(event.request.url, res.clone());
+            trimCache(DYNAMIC_CACHE, 10);
             return res;
           });
         });

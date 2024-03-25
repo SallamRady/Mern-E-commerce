@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { addToDB, isDBEmpty } from "../../utils/IDB/idb.utility";
 
 // * declare inital user stat
 const initialState = {};
@@ -9,6 +10,7 @@ export const productSlice = createSlice({
   initialState,
   reducers: {
     setDataProduct: (state, action) => {
+      addToDB(action.payload);
       state.productList = [...action.payload];
     },
   },
