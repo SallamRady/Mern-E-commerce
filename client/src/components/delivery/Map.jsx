@@ -53,10 +53,10 @@ const DeliveryMap = () => {
           <span className="text-green-500">Delivery Location : </span>
           <span className="text-gray-500"> {deliveryLocation.toString()}</span>
         </p>
-        <h2 class="mb-2 text-lg font-semibold text-orange-600 dark:text-white">
+        <h2 className="mb-2 text-lg font-semibold text-orange-600 dark:text-white">
           Note :
         </h2>
-        <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+        <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
           <li>This is a dummy data I made it just for test </li>
           <li>As I build this project to improve my skills :)</li>
           <li>Real Time User Tracking For Delivery Using Socket.io</li>

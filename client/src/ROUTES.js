@@ -12,6 +12,7 @@ import {
   LOGIN_PATH,
   MENU_PATH,
   NEW_PRODUCT_PATH,
+  OFFLINE_PATH,
   REGISTER_PATH,
 } from "./constants/Pathes";
 import App from "./App";
@@ -24,12 +25,14 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import NewProduct from "./pages/NewProduct";
 import Success from "./pages/Success";
+import Offline from "./pages/Offline";
 
 // TODO:: declare our router variable
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path={HOME_PATH} element={<App />}>
       <Route index element={<Home />} />
+      <Route path={OFFLINE_PATH} element={<Offline />} />
       <Route path={MENU_PATH} element={<Menu />} />
       <Route path={ABOUT_PATH} element={<About />} />
       <Route path={CONTACT_PATH} element={<Contact />} />

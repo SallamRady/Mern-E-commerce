@@ -3,6 +3,7 @@
  * change in it in next time more easier.
  */
 export const HOME_PATH = "/";
+export const OFFLINE_PATH = "/offline";
 export const MENU_PATH = "/menu";
 export const ABOUT_PATH = "/about";
 export const CONTACT_PATH = "/contact";

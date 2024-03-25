@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { checkAuth } from "./redux/slices/user.slice";
 import { setDataProduct } from "./redux/slices/product.slice";
+import { installAppOnDesktop } from "./installApp";
 
 function App() {
   // * declare our state variables
@@ -30,7 +31,9 @@ function App() {
   useEffect(async () => {
     dispatch(checkAuth());
     getProductData();
+    installAppOnDesktop();
   }, []);
+
   // * return component ui
   return (
     <div>

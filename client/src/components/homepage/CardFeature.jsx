@@ -59,9 +59,9 @@ const CardFeature = ({ image, name, price, category, loading, id }) => {
               onClick={() =>
                 addProductToCart({ image, name, price, category, loading, id })
               }
-              class={btnClass}
+              className={btnClass}
             >
-              <span class="relative z-10">Add To Cart</span>
+              <span className="relative z-10">Add To Cart</span>
             </button>
           </>
         ) : (

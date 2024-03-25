@@ -102,14 +102,14 @@ const Cart = () => {
               <button
                 disabled={loading}
                 onClick={() => handlePayment()}
-                class="flex items-center justify-center text-red hover:before:bg-redborder-red-500 relative h-[50px] w-full overflow-hidden border border-red-500 bg-white px-3 text-red-500 shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-red-500 before:transition-all before:duration-500 hover:text-white hover:shadow-red-500 hover:before:left-0 hover:before:w-full"
+                className="flex items-center justify-center text-red hover:before:bg-redborder-red-500 relative h-[50px] w-full overflow-hidden border border-red-500 bg-white px-3 text-red-500 shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-red-500 before:transition-all before:duration-500 hover:text-white hover:shadow-red-500 hover:before:left-0 hover:before:w-full"
               >
-                <span class="relative z-10 mx-1">Payment </span>
+                <span className="relative z-10 mx-1">Payment </span>
                 {loading && (
                   <div role="status">
                     <svg
                       aria-hidden="true"
-                      class="w-4 h-4 me-2 text-gray-200 animate-spin dark:text-gray-600 fill-red-500 hover:fill-gray-500"
+                      className="w-4 h-4 me-2 text-gray-200 animate-spin dark:text-gray-600 fill-red-500 hover:fill-gray-500"
                       viewBox="0 0 100 101"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
