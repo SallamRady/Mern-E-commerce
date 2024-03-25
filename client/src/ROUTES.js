@@ -6,6 +6,7 @@ import {
 import {
   ABOUT_PATH,
   CART_PATH,
+  CHECKOUT_SUCCESS,
   CONTACT_PATH,
   HOME_PATH,
   LOGIN_PATH,
@@ -22,6 +23,7 @@ import Cart from "./pages/Cart";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import NewProduct from "./pages/NewProduct";
+import Success from "./pages/Success";
 
 // TODO:: declare our router variable
 const router = createBrowserRouter(
@@ -35,6 +37,7 @@ const router = createBrowserRouter(
       <Route path={LOGIN_PATH} element={<Login />} />
       <Route path={REGISTER_PATH} element={<Register />} />
       <Route path={NEW_PRODUCT_PATH} element={<NewProduct />} />
+      <Route path={CHECKOUT_SUCCESS} element={<Success />} />
     </Route>
   )
 );
