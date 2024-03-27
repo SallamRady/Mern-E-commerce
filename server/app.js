@@ -8,6 +8,7 @@ const authRoutes = require("./routes/auth.routes");
 const productRoutes = require("./routes/product.routes");
 const paymentRoutes = require("./routes/payment.routes");
 const deliveryRoutes = require("./routes/delivery.routes");
+const notificationRoutes = require("./routes/notification.routes");
 const consoleColors = require("./constants/console.colors");
 const Delivery = require("./models/delivery.model");
 
@@ -33,7 +34,9 @@ app.use(authRoutes);
 app.use(productRoutes);
 app.use(paymentRoutes);
 app.use(deliveryRoutes);
+app.use(notificationRoutes);
 
+// * Push Dummy data for real-time user tracing his delivery
 setInterval(() => {
   try {
     const io = require("./socket").getIO();

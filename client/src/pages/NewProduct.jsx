@@ -94,7 +94,7 @@ export default function NewProduct() {
   };
 
   return (
-    <div className="p-4">
+    <div className="pt-20">
       <form
         onSubmit={handleSubmit}
         className="m-auto w-full max-w-md  shadow flex flex-col p-3 bg-white"

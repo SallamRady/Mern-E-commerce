@@ -1,17 +1,14 @@
 import { Link } from "react-router-dom";
 import logoImg from "../../assets/logo.png";
-import {
-  ABOUT_PATH,
-  CART_PATH,
-  CONTACT_PATH,
-  HOME_PATH,
-} from "../../constants/Pathes";
+import { CART_PATH, HOME_PATH } from "../../constants/Pathes";
+import { MdOutlineNotificationsActive } from "react-icons/md";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import { BsCartFill } from "react-icons/bs";
 import { useState } from "react";
 import UserDropDown from "./UserDropDown";
 import { useSelector } from "react-redux";
 import jumpToReleventDiv from "../../utils/scrol/jumpToReleventDiv";
+import askNotificationsPermission from "../../utils/Notifications/configurePushSubscription";
 
 export default function MainHeader() {
   // *Declare our state variables
@@ -21,6 +18,12 @@ export default function MainHeader() {
 
   // TODO::define our functions
   const toggleUserDropDown = () => setShowUserDropDown((prev) => !prev);
+  const handleEnableNotifications = () => {
+    // check if browser support notification
+    if ("Notification" in window) {
+      askNotificationsPermission();
+    }
+  };
 
   // *Return our Component UI.
   return (
@@ -39,8 +42,12 @@ export default function MainHeader() {
         <nav className="flex gap-3 md:gap-6 text-base md:text-lg">
           <Link to={HOME_PATH}>Home</Link>
           <Link onClick={() => jumpToReleventDiv("ourMenu")}>Menu</Link>
-          <Link to={ABOUT_PATH}>About</Link>
-          <Link to={CONTACT_PATH}>Contact</Link>
+          <button
+            onClick={() => handleEnableNotifications()}
+            className="bg-pink-500 hover:bg-pink-700 text-white px-4 rounded hidden sm:flex  justify-between items-center"
+          >
+            Enable Notificatios <MdOutlineNotificationsActive />
+          </button>
         </nav>
         {/* cart icon & actions */}
         <div className="text-2xl text-slate-600 relative">

@@ -36,7 +36,7 @@ export default function ProductList({ heading, id }) {
     <div id={id} className="my-5">
       <h2 className="font-bold text-2xl text-slate-800 mb-4">{heading}</h2>
 
-      <div className="flex gap-4 justify-center">
+      <div className="flex gap-4 justify-center overflow-x-auto">
         {categoryList && categoryList.length ? (
           categoryList?.map((el) => {
             return (

@@ -1,5 +1,7 @@
 const consoleColors = require("../constants/console.colors");
 const Product = require("../models/Product.model");
+const Subscription = require("../models/notificationSubScription.model");
+const webPush = require("web-push");
 
 module.exports.addProduct = (req, res, next) => {
   //TODO::extract data from body
@@ -14,8 +16,26 @@ module.exports.addProduct = (req, res, next) => {
         message: "Product created successfully :)",
       });
     })
+    .then(() => {
+      return Subscription.find({});
+    })
+    .then((Subscriptions) => {
+      // push notification.
+      let privateKey = process.env.WEB_PUSH_Priate_Key;
+      let publicKey = process.env.WEB_PUSH_Public_Key;
+      let subject = "mailto:sallamrady99@gmail.com";
+      webPush.setVapidDetails(subject, publicKey, privateKey);
+      for (let i = 0; i < Subscriptions.length; i++) {
+        const element = Subscriptions[i];
+        let msgBody = JSON.stringify({
+          title: "New Product Added",
+          content: "New Product Added Successfully",
+        });
+        webPush.sendNotification(element, msgBody);
+      }
+    })
     .catch((err) => {
-      console.log(consoleColors.red, "Error in create product::", err);
+      console.log("Error in create product::", err);
       return res.status(500).json({
         ok: false,
         message: "Error in create product",
@@ -34,7 +54,7 @@ module.exports.getAllProducts = (req, res, next) => {
       });
     })
     .catch((err) => {
-      console.log(consoleColors.red, "Error in create product::", err);
+      console.log("Error in create product::", err);
       return res.status(500).json({
         ok: false,
         message: "Error in create product",

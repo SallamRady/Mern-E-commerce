@@ -95,3 +95,19 @@ self.addEventListener("fetch", (event) => {
       })
   );
 });
+
+/**
+ * Push Event
+ * listen for incomming notifications from back-end
+ */
+self.addEventListener("push", (e) => {
+  let data = { title: "New!", content: "Something New happened!" };
+
+  if (e.data) {
+    data = JSON.parse(e.data.text());
+  }
+  let options = {
+    body: data.content,
+  };
+  e.waitUntil(self.registration.showNotification(data.title, options));
+});
